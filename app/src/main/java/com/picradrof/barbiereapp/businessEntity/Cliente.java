@@ -1,6 +1,6 @@
 package com.picradrof.barbiereapp.businessEntity;
 
-import com.picradrof.barbiereapp.businessLogic.exception.AlreadyExistingUsernameException;
+import com.picradrof.barbiereapp.businessLogic.exception.*;
 
 public class Cliente implements IEntityCliente  {
     protected String username;
@@ -26,7 +26,12 @@ public class Cliente implements IEntityCliente  {
      * @param username
      * @param password
      */
-    public Cliente(String username, String password) {
+    public Cliente(String username, String password) throws WrongLoginInfoException,UserNotEnabledException {
 
+        // se username o psw errate bisogna fare:
+        // throw new WrongLoginInfoException("Username o Password errate!");
+
+        // se untente non è validato bisogna fare:
+        // throw new UserNotEnabledException("Utente non validato!");
     }
 }
