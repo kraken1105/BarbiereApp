@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,7 +31,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.picradrof.barbiereapp.R;
-import com.picradrof.barbiereapp.utility.gestionedb.DBHandler;
+import com.picradrof.barbiereapp.utility.DBHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
 
         DBHandler db = new DBHandler(this);
+        db.open();
+        Log.d("PIERPOLLO", String.valueOf(db.ottieniTuttiClienti().getColumnCount()));
+        db.close();
+
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
