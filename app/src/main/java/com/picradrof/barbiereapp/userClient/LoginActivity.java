@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        
         DBHandler db = new DBHandler(this);
         db.open();
         Log.d("PIERPOLLO", String.valueOf(db.ottieniTuttiClienti().getColumnCount()));
