@@ -1,5 +1,8 @@
 package com.picradrof.barbiereapp.businessLogic;
 
+import com.picradrof.barbiereapp.businessEntity.IEntityCliente;
+import com.picradrof.barbiereapp.businessLogic.exception.*;
+
 public class CoordinatorFacade implements ICliente {
 
     //**************** Singleton ******************/
@@ -13,14 +16,16 @@ public class CoordinatorFacade implements ICliente {
     //********************************************/
 
     @Override
-    public boolean effettuaRegistrazione(String username, String password, String nome, String cognome) {
-        CoordinatorCliente corCliente = CoordinatorCliente.getInstance();
+    public boolean effettuaRegistrazione(String username, String password, String nome, String cognome)
+            throws UsernameTooShortException,PasswordTooShortException,AlreadyExistingUsernameException {
+        ICliente corCliente = CoordinatorCliente.getInstance();
         return corCliente.effettuaRegistrazione(username, password, nome, cognome);
     }
 
     @Override
-    public boolean login(String username, String password) {
-        CoordinatorCliente corCliente = CoordinatorCliente.getInstance();
+    public IEntityCliente login(String username, String password)
+            throws WrongLoginInfoException,UserNotEnabledException {
+        ICliente corCliente = CoordinatorCliente.getInstance();
         return corCliente.login(username, password);
     }
 }

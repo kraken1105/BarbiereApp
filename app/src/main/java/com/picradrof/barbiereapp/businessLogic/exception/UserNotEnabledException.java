@@ -2,8 +2,8 @@ package com.picradrof.barbiereapp.businessLogic.exception;
 
 import android.util.Log;
 
-public class AlreadyExistingUsernameException extends Exception {
-    public AlreadyExistingUsernameException(String msg) {
+public class UserNotEnabledException extends Exception {
+    public UserNotEnabledException(String msg) {
         super(msg);
         Log.d("EXCEPTION", msg);
     }
