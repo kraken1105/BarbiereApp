@@ -30,6 +30,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.picradrof.barbiereapp.R;
+import com.picradrof.barbiereapp.utility.gestionedb.DBHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        DBHandler db = new DBHandler(this);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
