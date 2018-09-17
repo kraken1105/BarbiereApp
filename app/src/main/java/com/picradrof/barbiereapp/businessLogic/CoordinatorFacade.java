@@ -11,13 +11,17 @@ public class CoordinatorFacade implements ICliente {
     private CoordinatorFacade() {}
 
     public static CoordinatorFacade getInstance() {
+        if(instance == null) {
+            instance = new CoordinatorFacade();
+        }
         return instance;
     }
     //********************************************/
 
     @Override
     public boolean effettuaRegistrazione(String username, String password, String nome, String cognome)
-            throws UsernameTooShortException,PasswordTooShortException,AlreadyExistingUsernameException {
+            throws UsernameTooShortException,PasswordTooShortException,AlreadyExistingUsernameException,
+                   NameNullException,SurnameNullException {
         ICliente corCliente = CoordinatorCliente.getInstance();
         return corCliente.effettuaRegistrazione(username, password, nome, cognome);
     }

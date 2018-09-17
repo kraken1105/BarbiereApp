@@ -8,7 +8,30 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.picradrof.barbiereapp.userClient.LoginActivity;
+
 public class DBHandler {
+
+    //**************** Singleton ******************/
+    private static DBHandler instance = null;
+
+    private DBHandler(Context ctx)
+    {
+        this.context = ctx;
+        DBHelper = new DatabaseHelper(context);
+    }
+
+    public static DBHandler getInstance(Context ctx) {
+        if(instance == null) {
+            instance = new DBHandler(ctx);
+        }
+        return instance;
+    }
+
+    public static DBHandler getInstance() {
+        return instance;
+    }
+    //********************************************/
 
     static final String KEY_RIGAID = "id";
     static final String KEY_NOME = "nome";
@@ -19,18 +42,14 @@ public class DBHandler {
     static final int DATABASE_VERSIONE = 1;
 
     static final String DATABASE_CREAZIONE =
-            "CREATE TABLE clienti (id integer primary key autoincrement, "
-                    + "nome text not null, indirizzo text not null);";
+            "CREATE TABLE clienti (id integer primary key autoincrement, username text unique," +
+                    " password text not null, nome text not null, cognome text not null, abilitato boolean not null);";
+    static final String DATABASE_POPOLAMENTO =
+            "INSERT INTO clienti(username,password,nome,cognome,abilitato) values ('Provolino','wlaprovola','Provola','Affumicata','1');";
 
     final Context context;
     DatabaseHelper DBHelper;
     SQLiteDatabase db;
-
-    public DBHandler(Context ctx)
-    {
-        this.context = ctx;
-        DBHelper = new DatabaseHelper(context);
-    }
 
     private static class DatabaseHelper extends SQLiteOpenHelper
     {
@@ -44,6 +63,7 @@ public class DBHandler {
         {
             try {
                 db.execSQL(DATABASE_CREAZIONE);
+                db.execSQL(DATABASE_POPOLAMENTO);
             }
             catch (SQLException e) {
                 e.printStackTrace();
@@ -74,12 +94,15 @@ public class DBHandler {
     }
 
 
-    public long inserisciCliente(String nome, String indirizzo)
+    public long inserisciCliente(String username, String password, String nome, String cognome)
     {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_NOME, nome);
-        initialValues.put(KEY_INDIRIZZO, indirizzo);
-        return db.insert(DATABASE_TABELLA, null, initialValues);
+        initialValues.put("username", username);
+        initialValues.put("password", password);
+        initialValues.put("nome", nome);
+        initialValues.put("cognome", cognome);
+        initialValues.put("abilitato", false);
+        return db.insert("clienti", null, initialValues);
     }
 
 

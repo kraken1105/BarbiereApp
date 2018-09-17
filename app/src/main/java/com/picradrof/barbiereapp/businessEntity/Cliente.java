@@ -1,6 +1,10 @@
 package com.picradrof.barbiereapp.businessEntity;
 
+import android.content.*;
+import android.util.Log;
+
 import com.picradrof.barbiereapp.businessLogic.exception.*;
+import com.picradrof.barbiereapp.utility.DBHandler;
 
 public class Cliente implements IEntityCliente  {
     protected String username;
@@ -16,9 +20,13 @@ public class Cliente implements IEntityCliente  {
      * @param cognome
      */
     public Cliente(String username, String password, String nome, String cognome) throws AlreadyExistingUsernameException {
-
-        // se utente già presente nel database bisogna fare:
-        // throw new AlreadyExistingUsernameException(username+" già presente nel database!");
+        DBHandler db = DBHandler.getInstance();
+        db.open();
+        long esito = db.inserisciCliente(username,password,nome,cognome);
+        if(esito==-1) {
+            throw new AlreadyExistingUsernameException(username+" già presente nel sistema!");
+        }
+        db.close();
     }
 
     /**
