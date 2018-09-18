@@ -8,5 +8,6 @@ public interface ICliente {
             throws UsernameTooShortException,PasswordTooShortException,AlreadyExistingUsernameException,
                    NameNullException,SurnameNullException;
     IEntityCliente login(String username, String password)
-            throws WrongLoginInfoException,UserNotEnabledException;
+            throws UsernameTooShortException,PasswordTooShortException, WrongLoginInfoException,
+                   UserNotEnabledException;
 }

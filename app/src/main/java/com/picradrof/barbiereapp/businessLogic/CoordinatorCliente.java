@@ -39,7 +39,12 @@ public class CoordinatorCliente implements ICliente {
 
     @Override
     public IEntityCliente login(String username, String password)
-            throws WrongLoginInfoException,UserNotEnabledException {
+            throws UsernameTooShortException,PasswordTooShortException,WrongLoginInfoException,UserNotEnabledException {
+        /*  Controlli sui dati inseriti dall'utente per registrarsi */
+        // Username troppo corto
+        if(username.length()<6) throw new UsernameTooShortException("L'username inserito deve contenere almeno 6 caratteri!");
+        // Password troppo corta
+        if(password.length()<6) throw new PasswordTooShortException("La password inserita deve contenere almeno 6 caratteri!");
 
         IEntityCliente cliente = new Cliente(username, password);
         return cliente;

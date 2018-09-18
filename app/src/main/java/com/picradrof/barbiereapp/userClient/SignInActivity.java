@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.picradrof.barbiereapp.R;
 import com.picradrof.barbiereapp.businessLogic.CoordinatorFacade;
+import com.picradrof.barbiereapp.businessLogic.ICliente;
 import com.picradrof.barbiereapp.businessLogic.exception.*;
 
 public class SignInActivity extends AppCompatActivity {
@@ -22,7 +23,7 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         // CoordinatorBusiness
-        final CoordinatorFacade coordinatore = CoordinatorFacade.getInstance();
+        final ICliente coordinatore = CoordinatorFacade.getInstance();
 
         // Set up the login form.
         mUsernameView = (EditText) findViewById(R.id.username);

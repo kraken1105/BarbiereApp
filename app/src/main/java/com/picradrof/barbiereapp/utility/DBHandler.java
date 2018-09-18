@@ -118,9 +118,10 @@ public class DBHandler {
     }
 
 
-    public Cursor ottieniCliente(long rigaId) throws SQLException
+    public Cursor ottieniCliente(String username) throws SQLException
     {
-        Cursor mCursore = db.query(true, DATABASE_TABELLA, new String[] {KEY_RIGAID, KEY_NOME, KEY_INDIRIZZO}, KEY_RIGAID + "=" + rigaId, null, null, null, null, null);
+        Cursor mCursore = db.query(true, "clienti", new String[] {"id", "nome", "cognome", "abilitato"}, "username = "+username, null, null, null, null, null);
+        Log.d("MYQUERY",String.valueOf(mCursore.getColumnCount()));
         if (mCursore != null) {
             mCursore.moveToFirst();
         }

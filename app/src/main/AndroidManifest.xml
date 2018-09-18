@@ -25,7 +25,11 @@
         </activity>
         <activity
             android:name=".userClient.SignInActivity"
-            android:label="@string/title_activity_sign_in"></activity>
+            android:label="@string/title_activity_sign_in" />
+        <activity
+            android:name=".userClient.LoggedInUserActivity"
+            android:label="@string/title_activity_logged_in_user"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

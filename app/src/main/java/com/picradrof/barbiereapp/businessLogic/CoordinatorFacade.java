@@ -28,7 +28,8 @@ public class CoordinatorFacade implements ICliente {
 
     @Override
     public IEntityCliente login(String username, String password)
-            throws WrongLoginInfoException,UserNotEnabledException {
+            throws UsernameTooShortException,PasswordTooShortException,WrongLoginInfoException,
+                   UserNotEnabledException {
         ICliente corCliente = CoordinatorCliente.getInstance();
         return corCliente.login(username, password);
     }
