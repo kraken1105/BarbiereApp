@@ -1,6 +1,6 @@
 package com.picradrof.barbiereapp.businessLogic;
 
-import com.picradrof.barbiereapp.businessEntity.*;
+import com.picradrof.barbiereapp.entity.*;
 import com.picradrof.barbiereapp.businessLogic.exception.*;
 
 public class CoordinatorCliente implements ICliente {

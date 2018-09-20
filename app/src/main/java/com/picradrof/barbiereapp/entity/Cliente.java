@@ -1,6 +1,5 @@
-package com.picradrof.barbiereapp.businessEntity;
+package com.picradrof.barbiereapp.entity;
 
-import android.content.*;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -14,7 +13,7 @@ public class Cliente implements IEntityCliente,Serializable {
     protected String password;
     protected String nome;
     protected String cognome;
-    protected int ID;
+    protected int id;
     protected boolean abilitato;
 
     /**
@@ -27,11 +26,12 @@ public class Cliente implements IEntityCliente,Serializable {
     public Cliente(String username, String password, String nome, String cognome) throws AlreadyExistingUsernameException {
         DBHandler db = DBHandler.getInstance();
         db.open();
-        long esito = db.inserisciCliente(username,password,nome,cognome);
+        long esito = db.registraCliente(username,password,nome,cognome);
+        db.close();
+
         if(esito==-1) {
             throw new AlreadyExistingUsernameException(username+" già presente nel sistema!");
         }
-        db.close();
     }
 
     /**
@@ -42,24 +42,28 @@ public class Cliente implements IEntityCliente,Serializable {
     public Cliente(String username, String password) throws WrongLoginInfoException,UserNotEnabledException {
         DBHandler db = DBHandler.getInstance();
         db.open();
-        /*Log.d("MYQUERY","Prima");
-        Cursor cursor = db.ottieniCliente(username);
-        Log.d("MYQUERY",String.valueOf(cursor.getInt(1))+" con nome "+cursor.getString(2));
-        Log.d("MYQUERY","dopo");*/
-
-        nome = "Nicola";
-        cognome = "Esposito";
-
-        // se username o psw errate bisogna fare:
-        // throw new WrongLoginInfoException("Username o Password errate!");
-
-        // se untente non è validato bisogna fare:
-        // throw new UserNotEnabledException("Utente non validato!");
+        Cursor cursor = db.loginCliente(username);
         db.close();
+
+        if (cursor == null)
+            throw new WrongLoginInfoException("Username o Password errata!");
+        else {
+            if (!password.equals(cursor.getString(1)))
+                throw new WrongLoginInfoException("Username o Password errata!");
+            else {
+                if(cursor.getInt(4)==0)
+                    throw new UserNotEnabledException("Utente non abilitato dal barbiere!");
+                else {
+                    id = cursor.getInt(0);
+                    nome = cursor.getString(2);
+                    cognome = cursor.getString(3);
+                }
+            }
+        }
     }
 
     public String getUsername() {return username;}
     public String getNome() {return nome;}
     public String getCognome() {return cognome;}
-    public int getID() {return ID;}
+    public int getID() {return id;}
 }

@@ -1,6 +1,6 @@
 package com.picradrof.barbiereapp.businessLogic;
 
-import com.picradrof.barbiereapp.businessEntity.IEntityCliente;
+import com.picradrof.barbiereapp.entity.IEntityCliente;
 import com.picradrof.barbiereapp.businessLogic.exception.*;
 
 public interface ICliente {

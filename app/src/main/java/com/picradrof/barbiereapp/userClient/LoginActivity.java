@@ -1,44 +1,19 @@
 package com.picradrof.barbiereapp.userClient;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 
 import com.picradrof.barbiereapp.R;
-import com.picradrof.barbiereapp.businessEntity.Cliente;
-import com.picradrof.barbiereapp.businessEntity.IEntityCliente;
+import com.picradrof.barbiereapp.entity.*;
 import com.picradrof.barbiereapp.businessLogic.*;
 import com.picradrof.barbiereapp.businessLogic.exception.*;
 import com.picradrof.barbiereapp.utility.DBHandler;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -73,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                     IEntityCliente cliente = coordinatore.login(mUsernameView.getText().toString(),
                             mPasswordView.getText().toString());
 
-                    Intent loggedInUserPage = new Intent(LoginActivity.this,LoggedInUserActivity.class);
+                    Intent loggedInUserPage = new Intent(LoginActivity.this, LoggedInUserActivity.class);
                     loggedInUserPage.putExtra("clienteLoggato", (Cliente) cliente);
                     startActivity(loggedInUserPage);
 
@@ -85,11 +60,11 @@ public class LoginActivity extends AppCompatActivity {
                 } catch(PasswordTooShortException e) {
                     mPasswordView.setError(e.getMessage());
                     mPasswordView.requestFocus();
-                } /*catch(WrongLoginInfoException e) {
+                } catch(WrongLoginInfoException e) {
                     Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 } catch(UserNotEnabledException e) {
                     Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                }*/ catch (Exception e) {}
+                }
             }
         });
 

@@ -8,9 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.picradrof.barbiereapp.entity.IServer;
 import com.picradrof.barbiereapp.userClient.LoginActivity;
 
-public class DBHandler {
+public class DBHandler implements IServer {
 
     //**************** Singleton ******************/
     private static DBHandler instance = null;
@@ -93,8 +94,8 @@ public class DBHandler {
         DBHelper.close();
     }
 
-
-    public long inserisciCliente(String username, String password, String nome, String cognome)
+    @Override
+    public long registraCliente(String username, String password, String nome, String cognome)
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put("username", username);
@@ -117,11 +118,11 @@ public class DBHandler {
         return db.query(DATABASE_TABELLA, new String[] {KEY_RIGAID, KEY_NOME, KEY_INDIRIZZO}, null, null, null, null, null);
     }
 
-
-    public Cursor ottieniCliente(String username) throws SQLException
+    @Override
+    public Cursor loginCliente(String username) throws SQLException
     {
-        Cursor mCursore = db.query(true, "clienti", new String[] {"id", "nome", "cognome", "abilitato"}, "username = "+username, null, null, null, null, null);
-        Log.d("MYQUERY",String.valueOf(mCursore.getColumnCount()));
+        Cursor mCursore = db.query("clienti", new String[] {"id", "password", "nome", "cognome", "abilitato"}, "username = ?", new String[]{username}, null, null, null, null);
+        Log.d("MYQUERY",String.valueOf(mCursore.getCount()));
         if (mCursore != null) {
             mCursore.moveToFirst();
         }
