@@ -122,7 +122,6 @@ public class DBHandler implements IServer {
     public Cursor loginCliente(String username) throws SQLException
     {
         Cursor mCursore = db.query("clienti", new String[] {"id", "password", "nome", "cognome", "abilitato"}, "username = ?", new String[]{username}, null, null, null, null);
-        Log.d("MYQUERY",String.valueOf(mCursore.getCount()));
         if (mCursore != null) {
             mCursore.moveToFirst();
         }

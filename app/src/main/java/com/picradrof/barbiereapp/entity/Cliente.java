@@ -45,9 +45,7 @@ public class Cliente implements IEntityCliente,Serializable {
         Cursor cursor = db.loginCliente(username);
         db.close();
 
-        if (cursor == null)
-            throw new WrongLoginInfoException("Username o Password errata!");
-        else {
+        if (cursor.getCount() != 0)
             if (!password.equals(cursor.getString(1)))
                 throw new WrongLoginInfoException("Username o Password errata!");
             else {
@@ -59,6 +57,8 @@ public class Cliente implements IEntityCliente,Serializable {
                     cognome = cursor.getString(3);
                 }
             }
+        else {
+            throw new WrongLoginInfoException("Username o Password errata!");
         }
     }
 
