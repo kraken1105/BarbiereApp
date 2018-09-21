@@ -3,7 +3,7 @@ package com.picradrof.barbiereapp.businessLogic;
 import com.picradrof.barbiereapp.entity.*;
 import com.picradrof.barbiereapp.businessLogic.exception.*;
 
-public class CoordinatorCliente implements ICliente {
+public class CoordinatorCliente {
 
     //**************** Singleton ******************/
     private static CoordinatorCliente instance = null;
@@ -18,7 +18,6 @@ public class CoordinatorCliente implements ICliente {
     }
     //********************************************/
 
-    @Override
     public boolean effettuaRegistrazione(String username, String password, String nome, String cognome)
             throws UsernameTooShortException,PasswordTooShortException,AlreadyExistingUsernameException,
                    NameNullException,SurnameNullException {
@@ -37,7 +36,6 @@ public class CoordinatorCliente implements ICliente {
         return true; // utente inserito nel database
     }
 
-    @Override
     public IEntityCliente login(String username, String password)
             throws UsernameTooShortException,PasswordTooShortException,WrongLoginInfoException,UserNotEnabledException {
         /*  Controlli sui dati inseriti dall'utente per registrarsi */

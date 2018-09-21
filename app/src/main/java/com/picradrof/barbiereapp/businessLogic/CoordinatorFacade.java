@@ -22,7 +22,7 @@ public class CoordinatorFacade implements ICliente {
     public boolean effettuaRegistrazione(String username, String password, String nome, String cognome)
             throws UsernameTooShortException,PasswordTooShortException,AlreadyExistingUsernameException,
                    NameNullException,SurnameNullException {
-        ICliente corCliente = CoordinatorCliente.getInstance();
+        CoordinatorCliente corCliente = CoordinatorCliente.getInstance();
         return corCliente.effettuaRegistrazione(username, password, nome, cognome);
     }
 
@@ -30,7 +30,7 @@ public class CoordinatorFacade implements ICliente {
     public IEntityCliente login(String username, String password)
             throws UsernameTooShortException,PasswordTooShortException,WrongLoginInfoException,
                    UserNotEnabledException {
-        ICliente corCliente = CoordinatorCliente.getInstance();
+        CoordinatorCliente corCliente = CoordinatorCliente.getInstance();
         return corCliente.login(username, password);
     }
 }

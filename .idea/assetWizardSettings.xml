@@ -34,9 +34,11 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="foregroundImage" value="C:\Users\picci\Desktop\logoApp.png" />
+                                      <entry key="backgroundColor" value="ff8c00" />
+                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
+                                      <entry key="foregroundImage" value="C:\Users\picci\Desktop\ic_input_add.png" />
                                       <entry key="legacyIconShape" value="CIRCLE" />
+                                      <entry key="outputName" value="ic_my_input_add" />
                                       <entry key="webIconShape" value="CIRCLE" />
                                     </map>
                                   </option>
