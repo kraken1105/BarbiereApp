@@ -1,9 +1,10 @@
 package com.picradrof.barbiereapp.entity;
 
 import android.database.Cursor;
-import android.util.Log;
 
-import com.picradrof.barbiereapp.businessLogic.exception.*;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.AlreadyExistingUsernameException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.UserNotEnabledException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.WrongLoginInfoException;
 import com.picradrof.barbiereapp.utility.DBHandler;
 
 import java.io.Serializable;

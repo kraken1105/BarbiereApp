@@ -11,7 +11,7 @@ public class SlotOrario implements IEntitySlotOrario {
     protected boolean disponibile;
 
 
-    SlotOrario(LocalDate data, LocalTime oraInizio, LocalTime oraFine) {
+    public SlotOrario(LocalDate data, LocalTime oraInizio, LocalTime oraFine) {
 
         DBHandler db = DBHandler.getInstance();
         db.open();

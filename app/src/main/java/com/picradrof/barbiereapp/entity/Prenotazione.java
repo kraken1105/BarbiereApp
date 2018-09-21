@@ -6,7 +6,7 @@ public class Prenotazione implements IEntityPrenotazione {
     protected IEntityCliente cliente;
     protected IEntitySlotOrario slotOrario;
 
-    Prenotazione(IEntityCliente cliente, IEntitySlotOrario slotOrario) {
+    public Prenotazione(IEntityCliente cliente, IEntitySlotOrario slotOrario) {
         DBHandler db = DBHandler.getInstance();
         db.open();
         //funzione per l'inserimento in db della prenotazione

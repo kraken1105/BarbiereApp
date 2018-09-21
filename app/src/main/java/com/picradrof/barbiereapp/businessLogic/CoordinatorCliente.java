@@ -1,7 +1,13 @@
 package com.picradrof.barbiereapp.businessLogic;
 
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.AlreadyExistingUsernameException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.NameNullException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.PasswordTooShortException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.SurnameNullException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.UserNotEnabledException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.UsernameTooShortException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.WrongLoginInfoException;
 import com.picradrof.barbiereapp.entity.*;
-import com.picradrof.barbiereapp.businessLogic.exception.*;
 
 public class CoordinatorCliente {
 
@@ -20,7 +26,7 @@ public class CoordinatorCliente {
 
     public boolean effettuaRegistrazione(String username, String password, String nome, String cognome)
             throws UsernameTooShortException,PasswordTooShortException,AlreadyExistingUsernameException,
-                   NameNullException,SurnameNullException {
+            NameNullException,SurnameNullException {
         /*  Controlli sui dati inseriti dall'utente per registrarsi */
         // Username troppo corto
         if(username.length()<6) throw new UsernameTooShortException("L'username inserito deve contenere almeno 6 caratteri!");

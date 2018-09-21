@@ -10,9 +10,12 @@ import android.view.WindowManager;
 import android.widget.*;
 
 import com.picradrof.barbiereapp.R;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.PasswordTooShortException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.UserNotEnabledException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.UsernameTooShortException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.WrongLoginInfoException;
 import com.picradrof.barbiereapp.entity.*;
 import com.picradrof.barbiereapp.businessLogic.*;
-import com.picradrof.barbiereapp.businessLogic.exception.*;
 import com.picradrof.barbiereapp.utility.DBHandler;
 
 public class LoginActivity extends AppCompatActivity {

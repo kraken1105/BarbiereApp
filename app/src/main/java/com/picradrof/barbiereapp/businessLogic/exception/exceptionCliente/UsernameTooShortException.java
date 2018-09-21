@@ -1,4 +1,4 @@
-package com.picradrof.barbiereapp.businessLogic.exception;
+package com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente;
 
 import android.util.Log;
 

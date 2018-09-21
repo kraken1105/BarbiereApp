@@ -10,7 +10,11 @@ import android.widget.Toast;
 import com.picradrof.barbiereapp.R;
 import com.picradrof.barbiereapp.businessLogic.CoordinatorFacade;
 import com.picradrof.barbiereapp.businessLogic.ICliente;
-import com.picradrof.barbiereapp.businessLogic.exception.*;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.AlreadyExistingUsernameException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.NameNullException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.PasswordTooShortException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.SurnameNullException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.UsernameTooShortException;
 
 public class SignInActivity extends AppCompatActivity {
 
