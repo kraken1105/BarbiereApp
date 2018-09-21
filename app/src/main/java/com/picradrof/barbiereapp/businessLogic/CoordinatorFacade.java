@@ -2,6 +2,10 @@ package com.picradrof.barbiereapp.businessLogic;
 
 import com.picradrof.barbiereapp.entity.IEntityCliente;
 import com.picradrof.barbiereapp.businessLogic.exception.*;
+import com.picradrof.barbiereapp.entity.IEntitySlotOrario;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class CoordinatorFacade implements ICliente {
 
@@ -32,5 +36,18 @@ public class CoordinatorFacade implements ICliente {
                    UserNotEnabledException {
         CoordinatorCliente corCliente = CoordinatorCliente.getInstance();
         return corCliente.login(username, password);
+    }
+
+    boolean effettuaPrenotazione(IEntityCliente cliente, IEntitySlotOrario slotOrario) {
+
+
+        return false;
+    }
+
+    ArrayList<IEntitySlotOrario> verificaDisponibilita(LocalDate data) {
+
+        CoordinatorSlotOrario corSlotOrario = CoordinatorSlotOrario.getInstance();
+
+        return corSlotOrario.verificaDisponibilita(data);
     }
 }
