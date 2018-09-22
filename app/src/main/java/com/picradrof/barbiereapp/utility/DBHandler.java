@@ -11,6 +11,9 @@ import android.util.Log;
 import com.picradrof.barbiereapp.entity.IServer;
 import com.picradrof.barbiereapp.userClient.LoginActivity;
 
+import java.sql.Date;
+import java.sql.Time;
+
 public class DBHandler implements IServer {
 
     //**************** Singleton ******************/
@@ -45,8 +48,20 @@ public class DBHandler implements IServer {
     static final String DATABASE_CREAZIONE =
             "CREATE TABLE clienti (id integer primary key autoincrement, username text unique," +
                     " password text not null, nome text not null, cognome text not null, abilitato boolean not null);";
-    static final String DATABASE_POPOLAMENTO =
+    static final String DATABASE_CREAZIONE2 =
+            "CREATE TABLE prenotazioni (id integer primary key autoincrement, cliente text not null," +
+                    " slotOrario integer not null, CONSTRAINT prenotazione_specifica unique(cliente,slotOrario));";
+    static final String DATABASE_CREAZIONE3 =
+            "CREATE TABLE slotOrari (id integer primary key autoincrement,data date not null," +
+                    " oraInizio time not null, oraFine time not null, disponibile boolean not null, CONSTRAINT slot_specifico unique(data,orInizio,oraFine));";
+    static final String DATABASE_POPOLAMENTO_CLIENTI =
             "INSERT INTO clienti(username,password,nome,cognome,abilitato) values ('Provolino','wlaprovola','Provola','Affumicata','1');";
+    static final String DATABASE_POPOLAMENTO_PRENOTAZIONI =
+            "INSERT INTO prenotazionii(cliente,slotOrario) values ('Provolino','1');";
+    static final String DATABASE_POPOLAMENTO_SLOTORARI1 =
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-09-24','09:30:00','10:00:00','0') ; ";
+    static final String DATABASE_POPOLAMENTO_SLOTORARI2 =
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-09-24','10:30:00','11:00:00','1') ;" ;
 
     final Context context;
     DatabaseHelper DBHelper;
@@ -64,7 +79,12 @@ public class DBHandler implements IServer {
         {
             try {
                 db.execSQL(DATABASE_CREAZIONE);
-                db.execSQL(DATABASE_POPOLAMENTO);
+                db.execSQL(DATABASE_CREAZIONE2);
+                db.execSQL(DATABASE_CREAZIONE3);
+                db.execSQL(DATABASE_POPOLAMENTO_CLIENTI);
+                db.execSQL(DATABASE_POPOLAMENTO_PRENOTAZIONI);
+                db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI1);
+                db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI2);
             }
             catch (SQLException e) {
                 e.printStackTrace();
@@ -115,26 +135,45 @@ public class DBHandler implements IServer {
 
     public Cursor ottieniTuttiClienti()
     {
-        return db.query(DATABASE_TABELLA, new String[] {KEY_RIGAID, KEY_NOME, KEY_INDIRIZZO}, null, null, null, null, null);
+        return db.query(DATABASE_TABELLA, new String[] {KEY_RIGAID, KEY_NOME, KEY_INDIRIZZO}, null, null,
+                null, null, null);
     }
 
     @Override
     public Cursor loginCliente(String username) throws SQLException
     {
-        Cursor mCursore = db.query("clienti", new String[] {"id", "password", "nome", "cognome", "abilitato"}, "username = ?", new String[]{username}, null, null, null, null);
+        Cursor mCursore = db.query("clienti", new String[] {"id", "password", "nome", "cognome", "abilitato"}, "username = ?",
+                new String[]{username}, null, null, null, null);
         if (mCursore != null) {
             mCursore.moveToFirst();
         }
         return mCursore;
     }
 
-
-    public boolean aggiornaCliente(long rigaId, String name, String email)
+    public Cursor verificaDisponibilità(Date data, Time oraInizio, Time oraFine) throws SQLException
     {
-        ContentValues args = new ContentValues();
-        args.put(KEY_NOME, name);
-        args.put(KEY_INDIRIZZO, email);
-        return db.update(DATABASE_TABELLA, args, KEY_RIGAID + "=" + rigaId, null) > 0;
+        Cursor mCursore = db.query("slotOrari", new String[] {"disponibile"}, "username = ? oraInizio=? oraFine=? ",
+                new String[]{data.toString(),oraInizio.toString(),oraFine.toString()},null, null, null, null);
+        if (mCursore != null) {
+            mCursore.moveToFirst();
+        }
+        return mCursore;
+    }
+
+    public int setDisponibilità(Date data, Time oraInizio, Time oraFine) throws SQLException
+    {
+        ContentValues disponibilità= new ContentValues();
+        disponibilità.put("DISPONIBILE","0");
+        return db.update("slotOrari",disponibilità,"data=? oraInizio=? oraFine=?",new String[]{data.toString(),
+                oraInizio.toString(),oraFine.toString()});
+    }
+
+    public long inserisciPrenotazione(String cliente, int slotOrario)
+    {
+        ContentValues prenotazione = new ContentValues();
+        prenotazione.put("CLIENTE",cliente);
+        prenotazione.put("SLOTORARIO",slotOrario);
+        return db.insert("prenotazioni",null,prenotazione);
     }
 
 }
