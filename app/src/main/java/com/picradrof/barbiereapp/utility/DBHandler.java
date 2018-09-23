@@ -11,8 +11,8 @@ import android.util.Log;
 import com.picradrof.barbiereapp.entity.IServer;
 import com.picradrof.barbiereapp.userClient.LoginActivity;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class DBHandler implements IServer {
 
@@ -150,7 +150,7 @@ public class DBHandler implements IServer {
         return mCursore;
     }
 
-    public Cursor verificaDisponibilità(Date data, Time oraInizio, Time oraFine) throws SQLException
+    public Cursor verificaDisponibilità(LocalDate data, LocalTime oraInizio, LocalTime oraFine) throws SQLException
     {
         Cursor mCursore = db.query("slotOrari", new String[] {"disponibile"}, "username = ? oraInizio=? oraFine=? ",
                 new String[]{data.toString(),oraInizio.toString(),oraFine.toString()},null, null, null, null);
@@ -160,19 +160,26 @@ public class DBHandler implements IServer {
         return mCursore;
     }
 
-    public int setDisponibilità(Date data, Time oraInizio, Time oraFine) throws SQLException
+    public int setDisponibilità(LocalDate data, LocalTime oraInizio, LocalTime oraFine,boolean disponibile) throws SQLException
     {
-        ContentValues disponibilità= new ContentValues();
-        disponibilità.put("DISPONIBILE","0");
-        return db.update("slotOrari",disponibilità,"data=? oraInizio=? oraFine=?",new String[]{data.toString(),
-                oraInizio.toString(),oraFine.toString()});
+        Cursor mCursore = db.query("slotOrari", new String[] {"disponibile"}, "username = ? oraInizio=? oraFine=? ",
+                new String[]{data.toString(),oraInizio.toString(),oraFine.toString()},null, null, null, null);
+        if(mCursore.getInt(1)==1) {
+            ContentValues disponibilita = new ContentValues();
+            disponibilita.put("DISPONIBILE", disponibile);
+            return db.update("slotOrari", disponibilita, "data=? oraInizio=? oraFine=?", new String[]{data.toString(),
+                    oraInizio.toString(), oraFine.toString()});
+        }
+        else return 0;
     }
 
-    public long inserisciPrenotazione(String cliente, int slotOrario)
+    public long inserisciPrenotazione(String cliente, LocalDate data, LocalTime oraInizio, LocalTime oraFine)
     {
+        Cursor mCursore = db.query("slotOrari", new String[] {"id"}, "username = ? oraInizio=? oraFine=? ",
+                new String[]{data.toString(),oraInizio.toString(),oraFine.toString()},null, null, null, null);
         ContentValues prenotazione = new ContentValues();
         prenotazione.put("CLIENTE",cliente);
-        prenotazione.put("SLOTORARIO",slotOrario);
+        prenotazione.put("SLOTORARIO",mCursore.getInt(1));
         return db.insert("prenotazioni",null,prenotazione);
     }
 
