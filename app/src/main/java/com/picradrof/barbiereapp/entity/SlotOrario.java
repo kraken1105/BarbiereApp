@@ -1,10 +1,14 @@
 package com.picradrof.barbiereapp.entity;
 
+import android.database.Cursor;
+
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionSlotOrario.NotAvailableSlotOrarioException;
 import com.picradrof.barbiereapp.utility.DBHandler;
 
 import java.time.*;
 
 public class SlotOrario implements IEntitySlotOrario {
+    protected int id;
     protected LocalDate data;
     protected LocalTime oraInizio;
     protected LocalTime oraFine;
@@ -15,36 +19,31 @@ public class SlotOrario implements IEntitySlotOrario {
 
         DBHandler db = DBHandler.getInstance();
         db.open();
-        // prelevo il campo disponibile da db
-        int disponibile = db.verificaDisponibilità(data,oraInizio,oraFine).getInt(1);
+        Cursor cursor = db.verificaDisponibilità(data,oraInizio,oraFine);
         db.close();
 
         this.data = data;
         this.oraInizio = oraInizio;
         this.oraFine = oraFine;
-        if(disponibile==1) this.disponibile=true;
-                            else this.disponibile=false;
+        this.id = cursor.getInt(0);
+        if(cursor.getInt(1)==1) this.disponibile=true;
+        else this.disponibile=false;
     }
-
 
     @Override
     public boolean setDisponibilita(boolean disponibile) {
 
-        // provo ad inserire in db, potrei avere errore se un altro cliente ha già prenotato.
-        // restituisco l'esito con il return (oppure possiamo fare eccezione)
-
         DBHandler db = DBHandler.getInstance();
         db.open();
-        //funzione per l'inserimento in db della prenotazione
-        db.setDisponibilità(this.data,this.oraInizio,this.oraFine,disponibile);
+        if(db.setDisponibilità(this.data,this.oraInizio,this.oraFine,disponibile)==0)
+            return false;
         db.close();
 
-
-
-        return false;
+        return true;
     }
 
     public LocalDate getData(){return this.data;}
     public LocalTime getOraInizio(){return this.oraInizio;}
     public LocalTime getOraFine(){return this.oraFine;}
+    public int getID() {return id;}
 }

@@ -45,19 +45,22 @@ public class DBHandler implements IServer {
     static final String DATABASE_TABELLA = "clienti";
     static final int DATABASE_VERSIONE = 1;
 
+    // Stringhe per la creazione delle tabelle nel database
     static final String DATABASE_CREAZIONE =
             "CREATE TABLE clienti (id integer primary key autoincrement, username text unique," +
                     " password text not null, nome text not null, cognome text not null, abilitato boolean not null);";
     static final String DATABASE_CREAZIONE2 =
-            "CREATE TABLE prenotazioni (id integer primary key autoincrement, cliente text not null," +
+            "CREATE TABLE prenotazioni (id integer primary key autoincrement, cliente integer not null," +
                     " slotOrario integer not null, CONSTRAINT prenotazione_specifica unique(cliente,slotOrario));";
     static final String DATABASE_CREAZIONE3 =
             "CREATE TABLE slotOrari (id integer primary key autoincrement,data date not null," +
                     " oraInizio time not null, oraFine time not null, disponibile boolean not null, CONSTRAINT slot_specifico unique(data,orInizio,oraFine));";
+
+    // Stringhe per il popolamento delle tabelle nel database
     static final String DATABASE_POPOLAMENTO_CLIENTI =
             "INSERT INTO clienti(username,password,nome,cognome,abilitato) values ('Provolino','wlaprovola','Provola','Affumicata','1');";
     static final String DATABASE_POPOLAMENTO_PRENOTAZIONI =
-            "INSERT INTO prenotazionii(cliente,slotOrario) values ('Provolino','1');";
+            "INSERT INTO prenotazioni(cliente,slotOrario) values ('Provolino','1');";
     static final String DATABASE_POPOLAMENTO_SLOTORARI1 =
             "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-09-24','09:30:00','10:00:00','0') ; ";
     static final String DATABASE_POPOLAMENTO_SLOTORARI2 =
@@ -96,6 +99,8 @@ public class DBHandler implements IServer {
             Log.w(DatabaseHelper.class.getName(),"Aggiornamento database dalla versione " + oldVersion + " alla "
                     + newVersion + ". I dati esistenti verranno eliminati.");
             db.execSQL("DROP TABLE IF EXISTS clienti");
+            db.execSQL("DROP TABLE IF EXISTS prenotazioni");
+            db.execSQL("DROP TABLE IF EXISTS slotOrari");
             onCreate(db);
         }
 
@@ -152,7 +157,7 @@ public class DBHandler implements IServer {
 
     public Cursor verificaDisponibilità(LocalDate data, LocalTime oraInizio, LocalTime oraFine) throws SQLException
     {
-        Cursor mCursore = db.query("slotOrari", new String[] {"disponibile"}, "username = ? oraInizio=? oraFine=? ",
+        Cursor mCursore = db.query("slotOrari", new String[] {"id", "disponibile"}, "data=? oraInizio=? oraFine=? ",
                 new String[]{data.toString(),oraInizio.toString(),oraFine.toString()},null, null, null, null);
         if (mCursore != null) {
             mCursore.moveToFirst();
@@ -162,25 +167,24 @@ public class DBHandler implements IServer {
 
     public int setDisponibilità(LocalDate data, LocalTime oraInizio, LocalTime oraFine,boolean disponibile) throws SQLException
     {
-        Cursor mCursore = db.query("slotOrari", new String[] {"disponibile"}, "username = ? oraInizio=? oraFine=? ",
+        // setDisponibilita restituisce 1 se l'update è andato a buon fine, 0 altrimenti (slot già prenotato)
+
+        Cursor mCursore = db.query("slotOrari", new String[] {"disponibile"}, "data=? oraInizio=? oraFine=? ",
                 new String[]{data.toString(),oraInizio.toString(),oraFine.toString()},null, null, null, null);
-        if(mCursore.getInt(1)==1) {
+        if(mCursore.getInt(0)==1) {
             ContentValues disponibilita = new ContentValues();
-            disponibilita.put("DISPONIBILE", disponibile);
+            disponibilita.put("disponibile", disponibile);
             return db.update("slotOrari", disponibilita, "data=? oraInizio=? oraFine=?", new String[]{data.toString(),
                     oraInizio.toString(), oraFine.toString()});
         }
         else return 0;
     }
 
-    public long inserisciPrenotazione(String cliente, LocalDate data, LocalTime oraInizio, LocalTime oraFine)
-    {
-        Cursor mCursore = db.query("slotOrari", new String[] {"id"}, "username = ? oraInizio=? oraFine=? ",
-                new String[]{data.toString(),oraInizio.toString(),oraFine.toString()},null, null, null, null);
-        ContentValues prenotazione = new ContentValues();
-        prenotazione.put("CLIENTE",cliente);
-        prenotazione.put("SLOTORARIO",mCursore.getInt(1));
-        return db.insert("prenotazioni",null,prenotazione);
+    public long inserisciPrenotazione(int clienteID, int slotOrarioID) {
+        ContentValues initialValues = new ContentValues();
+        initialValues.put("cliente",clienteID);
+        initialValues.put("slotOrario",slotOrarioID);
+        return db.insert("prenotazioni",null, initialValues);
     }
 
 }

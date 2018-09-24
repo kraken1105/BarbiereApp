@@ -10,7 +10,7 @@ public class Prenotazione implements IEntityPrenotazione {
         DBHandler db = DBHandler.getInstance();
         db.open();
         //funzione per l'inserimento in db della prenotazione
-        db.inserisciPrenotazione(cliente.getUsername(),slotOrario.getData(),slotOrario.getOraInizio(),slotOrario.getOraFine());
+        db.inserisciPrenotazione(cliente.getID(),slotOrario.getID());
         db.close();
 
         this.cliente = cliente;

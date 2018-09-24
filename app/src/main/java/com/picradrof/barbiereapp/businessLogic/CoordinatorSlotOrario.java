@@ -3,6 +3,7 @@ package com.picradrof.barbiereapp.businessLogic;
 import android.annotation.TargetApi;
 
 import com.picradrof.barbiereapp.businessLogic.exception.exceptionSlotOrario.NotAvailableDateException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionSlotOrario.NotAvailableSlotOrarioException;
 import com.picradrof.barbiereapp.entity.IEntitySlotOrario;
 import com.picradrof.barbiereapp.entity.SlotOrario;
 

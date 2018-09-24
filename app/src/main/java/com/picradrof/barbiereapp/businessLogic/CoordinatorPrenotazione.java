@@ -1,6 +1,7 @@
 package com.picradrof.barbiereapp.businessLogic;
 
 import com.picradrof.barbiereapp.businessLogic.exception.exceptionSlotOrario.NotAvailableDateException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionSlotOrario.NotAvailableSlotOrarioException;
 import com.picradrof.barbiereapp.entity.*;
 
 public class CoordinatorPrenotazione {
@@ -19,13 +20,13 @@ public class CoordinatorPrenotazione {
     //********************************************/
 
     IEntityPrenotazione effettuaPrenotazione(IEntityCliente cliente, IEntitySlotOrario slotOrario)
-            throws NotAvailableDateException {
+            throws NotAvailableSlotOrarioException {
         CoordinatorSlotOrario corSlotOrario = CoordinatorSlotOrario.getInstance();
 
         if (!corSlotOrario.setDisponibilita(slotOrario, false))
-            throw new NotAvailableDateException("Fascia oraria appena prenotata da un altro cliente!");
+            throw new NotAvailableSlotOrarioException("Fascia oraria appena prenotata da un altro cliente!");
 
-        return new Prenotazione(cliente, slotOrario);
+        return new Prenotazione((Cliente) cliente, (SlotOrario) slotOrario);
     }
 
 }

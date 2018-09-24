@@ -2,6 +2,7 @@ package com.picradrof.barbiereapp.businessLogic;
 
 import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.*;
 import com.picradrof.barbiereapp.businessLogic.exception.exceptionSlotOrario.NotAvailableDateException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionSlotOrario.NotAvailableSlotOrarioException;
 import com.picradrof.barbiereapp.entity.*;
 
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ public interface ICliente {
             throws UsernameTooShortException,PasswordTooShortException, WrongLoginInfoException,
             UserNotEnabledException;
     IEntityPrenotazione effettuaPrenotazione(IEntityCliente cliente, IEntitySlotOrario slotOrario)
-            throws NotAvailableDateException;
+            throws NotAvailableSlotOrarioException;
     ArrayList<IEntitySlotOrario> verificaDisponibilita(LocalDate data)
             throws NotAvailableDateException;
 }

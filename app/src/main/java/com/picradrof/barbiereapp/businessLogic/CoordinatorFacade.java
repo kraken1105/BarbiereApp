@@ -8,6 +8,7 @@ import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.UserNo
 import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.UsernameTooShortException;
 import com.picradrof.barbiereapp.businessLogic.exception.exceptionCliente.WrongLoginInfoException;
 import com.picradrof.barbiereapp.businessLogic.exception.exceptionSlotOrario.NotAvailableDateException;
+import com.picradrof.barbiereapp.businessLogic.exception.exceptionSlotOrario.NotAvailableSlotOrarioException;
 import com.picradrof.barbiereapp.entity.IEntityCliente;
 import com.picradrof.barbiereapp.entity.IEntityPrenotazione;
 import com.picradrof.barbiereapp.entity.IEntitySlotOrario;
@@ -48,7 +49,7 @@ public class CoordinatorFacade implements ICliente {
 
     @Override
     public IEntityPrenotazione effettuaPrenotazione(IEntityCliente cliente, IEntitySlotOrario slotOrario)
-            throws NotAvailableDateException {
+            throws NotAvailableSlotOrarioException {
         CoordinatorPrenotazione corPrenotazione = CoordinatorPrenotazione.getInstance();
         return corPrenotazione.effettuaPrenotazione(cliente, slotOrario);
     }
