@@ -1,6 +1,7 @@
 package com.picradrof.barbiereapp.entity;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import com.picradrof.barbiereapp.businessLogic.exception.exceptionSlotOrario.NotAvailableSlotOrarioException;
 import com.picradrof.barbiereapp.utility.DBHandler;

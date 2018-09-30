@@ -54,13 +54,13 @@ public class DBHandler implements IServer {
                     " slotOrario integer not null, CONSTRAINT prenotazione_specifica unique(cliente,slotOrario));";
     static final String DATABASE_CREAZIONE3 =
             "CREATE TABLE slotOrari (id integer primary key autoincrement,data date not null," +
-                    " oraInizio time not null, oraFine time not null, disponibile boolean not null, CONSTRAINT slot_specifico unique(data,orInizio,oraFine));";
+                    " oraInizio time not null, oraFine time not null, disponibile boolean not null, CONSTRAINT slot_specifico unique(data,oraInizio,oraFine));";
 
     // Stringhe per il popolamento delle tabelle nel database
     static final String DATABASE_POPOLAMENTO_CLIENTI =
             "INSERT INTO clienti(username,password,nome,cognome,abilitato) values ('Provolino','wlaprovola','Provola','Affumicata','1');";
     static final String DATABASE_POPOLAMENTO_PRENOTAZIONI =
-            "INSERT INTO prenotazioni(cliente,slotOrario) values ('Provolino','1');";
+            "INSERT INTO prenotazioni(cliente,slotOrario) values ('1','1');";
     static final String DATABASE_POPOLAMENTO_SLOTORARI1 =
             "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-24','09:30:00','10:00:00','0') ; ";
     static final String DATABASE_POPOLAMENTO_SLOTORARI2 =
@@ -155,31 +155,36 @@ public class DBHandler implements IServer {
         return mCursore;
     }
 
+    @Override
     public Cursor verificaDisponibilità(LocalDate data, LocalTime oraInizio, LocalTime oraFine) throws SQLException
     {
-        Cursor mCursore = db.query("slotOrari", new String[] {"id", "disponibile"}, "data=? oraInizio=? oraFine=? ",
-                new String[]{data.toString(),oraInizio.toString(),oraFine.toString()},null, null, null, null);
+        Cursor mCursore = db.query("slotOrari", new String[] {"id", "disponibile"}, "data = ? and oraInizio = ? and oraFine = ?",
+                new String[]{data.toString(),oraInizio.toString()+":00",oraFine.toString()+":00"},null, null, null, null);
         if (mCursore != null) {
             mCursore.moveToFirst();
         }
         return mCursore;
     }
 
+    @Override
     public int setDisponibilità(LocalDate data, LocalTime oraInizio, LocalTime oraFine,boolean disponibile) throws SQLException
     {
         // setDisponibilita restituisce 1 se l'update è andato a buon fine, 0 altrimenti (slot già prenotato)
 
-        Cursor mCursore = db.query("slotOrari", new String[] {"disponibile"}, "data=? oraInizio=? oraFine=? ",
-                new String[]{data.toString(),oraInizio.toString(),oraFine.toString()},null, null, null, null);
+        Cursor mCursore = db.query("slotOrari", new String[] {"disponibile"}, "data = ? and oraInizio = ? and oraFine = ? ",
+                new String[]{data.toString(),oraInizio.toString()+":00",oraFine.toString()+":00"},null, null, null, null);
+        mCursore.moveToFirst();
+
         if(mCursore.getInt(0)==1) {
             ContentValues disponibilita = new ContentValues();
             disponibilita.put("disponibile", disponibile);
-            return db.update("slotOrari", disponibilita, "data=? oraInizio=? oraFine=?", new String[]{data.toString(),
-                    oraInizio.toString(), oraFine.toString()});
+            return db.update("slotOrari", disponibilita, "data = ? and oraInizio = ? and oraFine = ?",
+                    new String[]{data.toString(), oraInizio.toString()+":00", oraFine.toString()+":00"});
         }
         else return 0;
     }
 
+    @Override
     public long inserisciPrenotazione(int clienteID, int slotOrarioID) {
         ContentValues initialValues = new ContentValues();
         initialValues.put("cliente",clienteID);
