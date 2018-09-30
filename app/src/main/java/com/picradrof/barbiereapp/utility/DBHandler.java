@@ -62,9 +62,9 @@ public class DBHandler implements IServer {
     static final String DATABASE_POPOLAMENTO_PRENOTAZIONI =
             "INSERT INTO prenotazioni(cliente,slotOrario) values ('Provolino','1');";
     static final String DATABASE_POPOLAMENTO_SLOTORARI1 =
-            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-09-24','09:30:00','10:00:00','0') ; ";
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-24','09:30:00','10:00:00','0') ; ";
     static final String DATABASE_POPOLAMENTO_SLOTORARI2 =
-            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-09-24','10:30:00','11:00:00','1') ;" ;
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-24','10:30:00','11:00:00','1') ;" ;
 
     final Context context;
     DatabaseHelper DBHelper;
