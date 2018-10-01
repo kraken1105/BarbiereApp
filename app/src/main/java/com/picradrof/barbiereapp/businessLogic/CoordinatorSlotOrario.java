@@ -31,7 +31,7 @@ public class CoordinatorSlotOrario {
     ArrayList<IEntitySlotOrario> verificaDisponibilita(LocalDate data)
             throws NotAvailableDateException {
         LocalTime oraApertura = LocalTime.of(8, 00);
-        LocalTime oraChiusura = LocalTime.of(20, 00);
+        LocalTime oraChiusura = LocalTime.of(13, 00);
         ArrayList<IEntitySlotOrario> listaSlotPerData = new ArrayList<IEntitySlotOrario>();
 
         /*  Controlli sui dati inseriti dall'utente */

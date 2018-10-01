@@ -15,15 +15,6 @@ public class SlotOrario implements IEntitySlotOrario {
     protected LocalTime oraFine;
     protected boolean disponibile;
 
-    public SlotOrario(LocalDate data, LocalTime oraInizio, LocalTime oraFine,boolean disponibile) {
-
-        this.data = data;
-        this.oraInizio = oraInizio;
-        this.oraFine = oraFine;
-        this.id = 3;
-        this.disponibile=disponibile;
-    }
-
     public SlotOrario(LocalDate data, LocalTime oraInizio, LocalTime oraFine) {
 
         DBHandler db = DBHandler.getInstance();
@@ -52,7 +43,12 @@ public class SlotOrario implements IEntitySlotOrario {
     }
 
     public LocalDate getData(){return this.data;}
+
+    @Override
     public LocalTime getOraInizio(){return this.oraInizio;}
+
+    @Override
     public LocalTime getOraFine(){return this.oraFine;}
+
     public int getID() {return id;}
 }

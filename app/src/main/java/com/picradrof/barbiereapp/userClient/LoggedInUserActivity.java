@@ -48,6 +48,7 @@ public class LoggedInUserActivity extends AppCompatActivity {
             @TargetApi(26)
             public void onClick(View view) {
                 Intent bookInt = new Intent(LoggedInUserActivity.this,BookingActivity.class);
+                bookInt.putExtra("clienteLoggato", (Cliente) cliente);
                 startActivity(bookInt);
                 /*
                 SlotOrario s=new SlotOrario(LocalDate.of(2018,10,24), LocalTime.of(10,30),LocalTime.of(11,00));
