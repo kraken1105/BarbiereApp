@@ -29,7 +29,8 @@
         <activity
             android:name=".userClient.LoggedInUserActivity"
             android:label="@string/title_activity_logged_in_user"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".userClient.BookingActivity"></activity>
     </application>
 
 </manifest>

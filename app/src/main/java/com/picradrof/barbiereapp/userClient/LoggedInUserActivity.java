@@ -47,14 +47,15 @@ public class LoggedInUserActivity extends AppCompatActivity {
             @Override
             @TargetApi(26)
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent bookInt = new Intent(LoggedInUserActivity.this,BookingActivity.class);
+                startActivity(bookInt);
+                /*
                 SlotOrario s=new SlotOrario(LocalDate.of(2018,10,24), LocalTime.of(10,30),LocalTime.of(11,00));
                 try {
                     IEntityPrenotazione ie=coordinatore.effettuaPrenotazione(cliente, s);
                     Toast.makeText(LoggedInUserActivity.this, "esito positivo", Toast.LENGTH_LONG).show();
                 } catch(Exception e){ Toast.makeText(LoggedInUserActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();}
-            }
+            */}
         });
     }
 
