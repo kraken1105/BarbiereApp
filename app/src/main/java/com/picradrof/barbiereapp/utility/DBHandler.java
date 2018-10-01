@@ -65,6 +65,24 @@ public class DBHandler implements IServer {
             "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-24','09:30:00','10:00:00','0') ; ";
     static final String DATABASE_POPOLAMENTO_SLOTORARI2 =
             "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-24','10:30:00','11:00:00','1') ;" ;
+    static final String DATABASE_POPOLAMENTO_SLOTORARI3 =
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-25','8:00:00','08:30:00','1') ;" ;
+    static final String DATABASE_POPOLAMENTO_SLOTORARI4 =
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-25','08:30:00','09:00:00','1') ;" ;
+    static final String DATABASE_POPOLAMENTO_SLOTORARI5 =
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-25','09:00:00','09:30:00','1') ;" ;
+    static final String DATABASE_POPOLAMENTO_SLOTORARI6 =
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-25','09:30:00','10:00:00','1') ;" ;
+    static final String DATABASE_POPOLAMENTO_SLOTORARI7 =
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-25','10:00:00','10:30:00','1') ;" ;
+    static final String DATABASE_POPOLAMENTO_SLOTORARI8 =
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-25','10:30:00','11:00:00','1') ;" ;
+    static final String DATABASE_POPOLAMENTO_SLOTORARI9 =
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-25','11:00:00','11:30:00','1') ;" ;
+    static final String DATABASE_POPOLAMENTO_SLOTORARI10 =
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-25','11:30:00','12:00:00','1') ;" ;
+    static final String DATABASE_POPOLAMENTO_SLOTORARI11 =
+            "INSERT INTO slotOrari(data,oraInizio,oraFine,disponibile) values ('2018-10-25','12:00:00','12:30:00','1') ;" ;
 
     final Context context;
     DatabaseHelper DBHelper;
@@ -88,6 +106,15 @@ public class DBHandler implements IServer {
                 db.execSQL(DATABASE_POPOLAMENTO_PRENOTAZIONI);
                 db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI1);
                 db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI2);
+                db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI3);
+                db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI4);
+                db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI5);
+                db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI6);
+                db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI7);
+                db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI8);
+                db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI9);
+                db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI10);
+                db.execSQL(DATABASE_POPOLAMENTO_SLOTORARI11);
             }
             catch (SQLException e) {
                 e.printStackTrace();
